@@ -2,6 +2,8 @@ This little script uses https://bibtexparser.readthedocs.org/en/v0.6.2/ and a st
 
 To run it just provide your bib files as arguments. It will compare the first one against the rest and output a report like this:
 
+
+<pre>
 ./check_duplicates.py "/Users/josepvalls/Dropbox/projects-santi/Proposal/References.bib" "/Users/josepvalls/Dropbox/projects-santi/Proposal/References 2.bib" "/Users/josepvalls/Dropbox/projects-santi/Proposal/References 3.bib"
 
 File:  /Users/josepvalls/Dropbox/projects-santi/Proposal/References 2.bib
@@ -39,3 +41,4 @@ CHECKING DUPLICATES
    int2014 valls2015int
    int2014 valls2014aiide
    chambers2008unsupervised Chambers2008
+   </pre>
