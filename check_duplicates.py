@@ -71,6 +71,18 @@ def string_edit_distance(s1, s2):
             _edit_dist_step(lev, i + 1, j + 1, s1[i], s2[j])
     return lev[len1][len2]
 
+def check_duplicates(records):
+		print "CHECKING DUPLICATES"
+		dups = set()
+		for i in records:
+			for j in records:
+				if string_edit_distance_norm(i.get('title',''),j.get('title',''))<0.3 and not i.get('id',None)==j.get('id',None):
+					key = tuple(sorted([i.get('id','?'),j.get('id','?')]))
+					if not key in dups:
+						print "  ",i.get('id','?'),j.get('id','?')
+						dups.add(key)
+
+
 def compare(records,records_):
 	records = dict(zip(collect(records,'id'),records))
 	records_ = dict(zip(collect(records_,'id'),records_))
@@ -85,7 +97,8 @@ def main(argv):
 	elif len(argv)==2:
 		records, metadata = bibtex.BibTexParser(open(argv[1])).parse()
 		if len(records) > 0:
-			pprint.pprint(records)
+			print "Found %d records" % len(records)
+			check_duplicates(records)
 		else:
 			sys.stderr.write('Zero records were parsed from the data\n')
 	else:
@@ -110,16 +123,7 @@ def main(argv):
 						print "  ",i
 			else:
 				sys.stderr.write('Zero records were parsed from %s\n' % bib)
-		print "CHECKING DUPLICATES"
-		dups = set()
-		for i in records_new:
-			for j in records_new:
-				if string_edit_distance_norm(i.get('title',''),j.get('title',''))<0.3 and not i.get('id',None)==j.get('id',None):
-					key = tuple(sorted([i.get('id','?'),j.get('id','?')]))
-					if not key in dups:
-						print "  ",i.get('id','?'),j.get('id','?')
-						dups.add(key)
-
+		check_duplicates(records_new)
 
 if __name__=="__main__":
 	main(sys.argv)
